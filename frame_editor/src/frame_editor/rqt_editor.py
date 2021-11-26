@@ -163,20 +163,26 @@ class FrameEditorGUI(ProjectPlugin, Interface):
 
     def update_frame_list(self):
         new_list = self.editor.frames.keys()
+        print(new_list)
 
         ## Add missing
         items = []
+        self.old_frame_list = []
+        print(self.old_frame_list)
         for item in new_list:
             if item not in self.old_frame_list:
                 items.append(item)
+        self.widget.list_frames.clear()
         self.widget.list_frames.addItems(items)
 
         ## Delete removed
+        print(self.old_frame_list)
         for item in self.old_frame_list:
             if item not in new_list:
                 if self.widget.list_frames.currentItem() and item == self.widget.list_frames.currentItem().text():
                     self.widget.list_frames.setCurrentItem(None)
                 found = self.widget.list_frames.findItems(item, QtCore.Qt.MatchExactly)
+                print(found)
                 self.widget.list_frames.takeItem(self.widget.list_frames.row(found[0]))
 
         self.widget.list_frames.sortItems()

@@ -111,9 +111,9 @@ class FrameEditor(QtCore.QObject):
                 not FrameEditor.frame_is_temporary(f) or include_temp]
 
     def iter_frames(self, include_temp=True):
-        for f in self.frames.itervalues():
-            if not self.frame_is_temporary(f.name) or include_temp:
-                yield f
+        for f in self.frames:
+            if not self.frame_is_temporary(self.frames[f].name) or include_temp:
+                yield self.frames[f]
 
 
     ## PRINT ##
