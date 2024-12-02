@@ -162,6 +162,11 @@ class FrameEditor(QtCore.QObject):
                 style = frame["style"]
             else:
                 style = "none"
+                
+            if "group" in frame:
+                group = frame["group"]
+            else:
+                group = ""
 
             if "data" in frame:
                 dat = frame["data"]
@@ -191,7 +196,7 @@ class FrameEditor(QtCore.QObject):
                 f = Object_Mesh(name, position, orientation, frame["parent"], dat["package"], dat["path"], dat["scale"])
                 f.set_color(color)
             else:
-                f = Frame(name, position, orientation, frame["parent"])
+                f = Frame(name, position, orientation, frame["parent"], group=group)
 
             self.command(Command_AddElement(self, f))
 
