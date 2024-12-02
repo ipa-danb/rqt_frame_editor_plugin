@@ -342,7 +342,8 @@ class FrameEditorGUI(ProjectPlugin, Interface):
         if not item:
             return
         self.editor.command(Command_RemoveElement(self.editor, self.editor.frames[item.text()]))
-
+        Frame.tf_buffer.clear()
+        self.update_tf_list()
 
     ## PARENTING ##
     ##
