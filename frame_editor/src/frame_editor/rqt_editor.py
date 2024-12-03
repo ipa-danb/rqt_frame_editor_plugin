@@ -232,8 +232,9 @@ class FrameEditorGUI(ProjectPlugin, Interface):
 
         # Loop through the frames and add them to the appropriate group or main list
         for item in items:
-            tree_item = QTreeWidgetItem()  # Create a new tree item for the frame
-            tree_item.setText(0, item)  # Set the text for the item (first column)
+            tree_item = QTreeWidgetItem() 
+            tree_item.setText(0, item)
+            tree_item.setFlags(tree_item.flags() | Qt.ItemIsSelectable)
 
             # Check if the frame has a group
             group = self.editor.frames[item].group
@@ -296,6 +297,8 @@ class FrameEditorGUI(ProjectPlugin, Interface):
                 found_item = self.find_item_in_children(top_item, name)
                 if found_item:
                     break
+        else:
+            found_item = top_level_items[0]
 
         if found_item:
             # Set the found item as the current item
