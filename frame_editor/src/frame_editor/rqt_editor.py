@@ -420,6 +420,7 @@ class FrameEditorGUI(ProjectPlugin, Interface):
             return
 
         self.editor.command(Command_AddElement(self.editor, Frame(name, parent=parent)))
+        self.update_frame_buffer()
 
 
 
@@ -442,8 +443,13 @@ class FrameEditorGUI(ProjectPlugin, Interface):
             return
 
         self.editor.command(Command_CopyElement(self.editor, name, source_name, parent_name))
+        self.update_frame_buffer()
 
 
+    def update_frame_buffer(self):
+        Frame.tf_buffer.clear()
+        rospy.sleep(0.1)
+        self.update_tf_list()
 
     @Slot(bool)
     def btn_delete_clicked(self, checked):
@@ -451,9 +457,8 @@ class FrameEditorGUI(ProjectPlugin, Interface):
         if not item:
             return
         self.editor.command(Command_RemoveElement(self.editor, self.editor.frames[item.text(0)]))
-        Frame.tf_buffer.clear()
-        self.update_tf_list()
-
+        self.update_frame_buffer()
+        
     ## PARENTING ##
     ##
     @Slot(bool)
