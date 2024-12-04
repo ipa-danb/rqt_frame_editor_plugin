@@ -5,6 +5,8 @@ Changelog for package frame_editor
 Forthcoming
 ------------------
 * Bug fix: Deleted Frames not beeing able to be reused
+* Feature: Clear Frame Buffer and Added loading animation for tf frame list when pressing either refresh button or deleting frames
+* Feature: Automatically Update TF Frame List when adding/duplicating frames (without clearing the frame buffer)
 * Chore: Moved from prints to rospy logging
 * Feature: Added search bar for both tf and frame list (style: `grey` out or `hide` frames with argument `--filter_style`)
 * Feature: Add Grouping Option for frames by setting the `group` attribute in the yaml file
