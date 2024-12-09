@@ -15,6 +15,21 @@ frame editor rqt-plugin
 
 ![The rqt plugin frame_editor](/frame_editor/etc/img/rqt_frame_editor.png "The rqt plugin frame_editor")
 
+* Feature: Moving frames
+
+![Moving Frames](/frame_editor/etc/img/moving_frames.gif "Feature: Moving frames")
+
+
+* Feature: Add Frames and Change their respective parents
+
+![Parent Frames](/frame_editor/etc/img/parent_frames.gif "Feature: Parent frames")
+
+* Feature: Filter and Delete Frames
+
+![Filter and Delete Frames](/frame_editor/etc/img/filter_delete_frames.gif "Feature: Filter and Delete Frames")
+
+
+
 ![The rviz view](/frame_editor/etc/img/rviz.png "Using an interactive marker to manipulated a tf-frame")
 
 ### Installation:
