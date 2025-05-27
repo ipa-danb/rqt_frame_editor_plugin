@@ -23,6 +23,8 @@ class FrameEditor_Services(Interface):
         self.editor = frame_editor
 
         rospy.Service("~align_frame", AlignFrame, self.callback_align_frame)
+        rospy.Service("~align_with_pose", AlignFrameWithPose, self.callback_align_with_pose)
+
         rospy.Service("~edit_frame", EditFrame, self.callback_edit_frame)
         rospy.Service("~get_frame", GetFrame, self.callback_get_frame)
         rospy.Service("~get_frame_names", GetFrameNames, self.callback_get_frame_names)
@@ -65,7 +67,41 @@ class FrameEditor_Services(Interface):
             if m & 16: mode.append("b")
             if m & 32: mode.append("c")
 
-            self.editor.command(Command_AlignElement(self.editor, frame, request.source_name, mode))
+            self.editor.command(Command_AlignElement(self.editor, frame, request.source_name, mode, pose=None))
+
+        return response
+    
+    def callback_align_with_pose(self, request):
+        rospy.loginfo("> Request to align frame {} with frame {} mode {}".format(request.name, request.pose, request.mode))
+
+        response = AlignFrameResponse()
+        response.error_code = 0
+
+        if request.name == "":
+            rospy.logerr(" Error: No name given")
+            response.error_code = 1
+
+        elif not request.pose:
+            rospy.logerr(" Error: No source not given")
+            response.error_code = 3
+
+        elif request.name not in self.editor.frames:
+            rospy.logerr(" Error: Frame not found: {}".format(request.name))
+            response.error_code = 2
+
+        else:
+            frame = self.editor.frames[request.name]
+
+            m = request.mode
+            mode = []
+            if m & 1: mode.append("x")
+            if m & 2: mode.append("y")
+            if m & 4: mode.append("z")
+            if m & 8: mode.append("a")
+            if m & 16: mode.append("b")
+            if m & 32: mode.append("c")
+
+            self.editor.command(Command_AlignElement(self.editor, frame, None, mode, pose=request.pose))
 
         return response
 

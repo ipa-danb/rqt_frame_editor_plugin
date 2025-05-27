@@ -103,7 +103,7 @@ class Command_ClearAll(QUndoCommand):
 
 class Command_AlignElement(QUndoCommand):
 
-    def __init__(self, editor, element, source_name, mode):
+    def __init__(self, editor, element, source_name, mode, pose=None):
         QUndoCommand.__init__(self, "Align")
         self.editor = editor
 
@@ -114,9 +114,13 @@ class Command_AlignElement(QUndoCommand):
 
         ## New Pose ##
         ##
-        position, orientation = FromTransformStamped(
-            element.tf_buffer.lookup_transform(
-                element.parent, source_name, rospy.Time(0)))
+        if not pose:
+            position, orientation = FromTransformStamped(
+                element.tf_buffer.lookup_transform(
+                    element.parent, source_name, rospy.Time(0)))
+        else:
+            position = pose.position
+            orientation = pose.orientation
 
         ## Position
         pos = list(element.position)
