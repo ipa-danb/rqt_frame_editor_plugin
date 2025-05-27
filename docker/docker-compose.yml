@@ -1,0 +1,17 @@
+services:
+  ros2-jazzy-gui:
+    image: ros2-jazzy-gui:latest # We'll build this image from Dockerfile
+    build:
+      context: .
+      dockerfile: Dockerfile # Reference to your Dockerfile
+    environment:
+      - DISPLAY=${DISPLAY} # Passes the host display variable to the container
+      - QT_X11_NO_MITSHM=1 # Fixes potential Qt issues with shared memory
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw # Allows X11 communication between host and container
+      - ../:/workspace/src # Mounts the parent directory to `/workspace` in the container (ROS 2 workspace)
+    network_mode: host # Makes the container use the host network (useful for GUI apps)
+    privileged: true # Grants extra privileges for graphics acceleration
+    tty: true # Keeps the container running interactively
+    restart: always # Restart if the container stops unexpectedly
+    command: bash -c "source /opt/ros/jazzy/setup.bash && cd /workspace && apt update && rosdep update && rosdep install --from-paths src --ignore-src -r -y && bash"
