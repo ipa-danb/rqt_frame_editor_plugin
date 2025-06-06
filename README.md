@@ -35,7 +35,10 @@ frame editor rqt-plugin
 ### Additional features: 
 * Group frames: You can group frames by adding a "group" entry in the yaml file. Frames with the same "group" entry will grouped.
 * Pin frames: An active frame will be pinned by clicking the pin box. That means the selected source_frame will be automatically reselected when the target_frame is selected.
-* 
+
+### [Service Interface](/SERVICES.md)
+
+
 ### Installation:
 #### Clone this repository into your catkin workspace.
 
